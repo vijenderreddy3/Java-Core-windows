@@ -1,0 +1,118 @@
+import java.util.Random;
+
+
+public class CommonUtils {
+
+	public static String getListType(String[] args){
+		
+		if(args.length == 1){
+			
+			if(args[0].equalsIgnoreCase("SLL") || args[0].equalsIgnoreCase("DLL") || args[0].equalsIgnoreCase("BST") || args[0].equalsIgnoreCase("AVL"))
+				return args[0];
+		}
+		else if(args.length == 4){
+			
+			if(args[0].equalsIgnoreCase("SLL") || args[0].equalsIgnoreCase("DLL") || args[0].equalsIgnoreCase("BST") || args[0].equalsIgnoreCase("AVL")){
+				
+				if(isNumeric(args[1]) && isNumeric(args[2]) && isNumeric(args[3]))
+					return args[0]+"*";
+			}
+		}
+
+		return null;
+	}
+	
+	public static boolean isNumeric(String number){
+		
+		for(int i=0; i<number.length(); i++){
+			char ch = number.charAt(i);
+			if(!(ch == '0' || ch == '1' || ch == '2' || ch == '3' || ch == '4' ||ch == '5' ||ch == '6' || ch == '7' || ch == '8' || ch == '9'))
+				return false;
+		}
+		return true;
+	}
+	
+	public static String generateString(Random rng, String characters, int length)
+	{
+	    char[] text = new char[length];
+	    for (int i = 0; i < length; i++)
+	    {
+	        text[i] = characters.charAt(rng.nextInt(characters.length()));
+	    }
+	    return new String(text);
+	}
+	
+	public static void listIsEmpty(){
+		System.out.println("List is Empty!");
+	}
+	
+	public static void showWellComeScreen(){
+		
+		System.out.println("1: To add a video ");
+		System.out.println("2: To delete a video ");
+		System.out.println("3: To add a customer");
+		System.out.println("4: To delete a customer");
+		System.out.println("5: To check if a particular video is in store");
+		System.out.println("6: To check out a video ");
+		System.out.println("7: To check in a video");
+		System.out.println("8: To print all customers");
+		System.out.println("9: To print all videos");
+		System.out.println("10: To print in store videos");
+		System.out.println("11: To print all rent videos ");
+		System.out.println("12: To print the videos rent by a customer");
+		System.out.println("13: To exit");
+	}
+	
+	public static CustomList<Video> initializeVideosList(String type){
+		
+		CustomList<Video> videos = null;
+		switch(type){
+		
+		case "SLL":{
+			videos = new SingleLinkedList<>();
+			break;
+		}
+		case "DLL":{
+			videos = new DoublyLinkedList<>();
+			break;
+		}
+		case "BST":{
+			videos = new BinarySearchTree<>();
+			break;
+		}
+		case "AVL":{
+			videos = new AVLtree<>();
+			break;
+		}
+		}
+		
+		return videos;
+	}
+	
+	public static CustomList<Customer> initializeCustomersList(String type){
+		
+		CustomList<Customer> customers = null;
+		
+		switch(type){
+		
+		case "SLL":{
+			customers = new SingleLinkedList<>();
+			break;
+		}
+		case "DLL":{
+			customers = new DoublyLinkedList<>();
+			break;
+		}
+		case "BST":{
+			customers = new BinarySearchTree<>();
+			break;
+		}
+		case "AVL":{
+			customers = new AVLtree<>();
+			break;
+		}
+		}
+		
+		return customers;
+	}
+}

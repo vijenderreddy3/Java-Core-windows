@@ -1,0 +1,20 @@
+public class Video extends MyObject{
+		
+		String name;
+		boolean isCheckOut = false;
+		int id;
+		
+		public Video(String name, int id){
+
+			super(name,id);
+		}
+		
+		public boolean isCheckOut() {
+			return isCheckOut;
+		}
+
+		public void setCheckOut(boolean isCheckOut) {
+			this.isCheckOut = isCheckOut;
+		}
+		
+	}

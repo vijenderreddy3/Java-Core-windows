@@ -1,0 +1,45 @@
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ComparePackages {
+
+	public static void main(String[] args) {
+		int length1 = 0;
+		int length2 = 0;
+		int[] array1;
+		int[] array2;
+		InputStreamReader ir = new InputStreamReader(System.in);
+		System.out.println("Enter first array length:");
+		try {
+			length1 = ir.read();
+			System.out.println("Enter Second array length");
+			length2 = ir.read();
+
+			if (length1 > 0 && length2 > 0) {
+				array1 = new int[length1];
+				array2 = new int[length2];
+				for (int i = 0; i < length1; i++) {
+					System.out.println("Enter index opsition of :" + i + " of array1:");
+					array1[i] = ir.read();
+				}
+				for (int i = 0; i < length2; i++) {
+					System.out.println("Enter index opsition of :" + i + " of array2:");
+					array2[i] = ir.read();
+				}
+			} else {
+				System.out.println("Entered wrong array sizes");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		List<Integer> result=new ArrayList<Integer>();
+		for(int i=0;i<length1;i++){
+			for(int j=0;j<length2;j++){
+				
+			}
+		}
+	}
+
+}

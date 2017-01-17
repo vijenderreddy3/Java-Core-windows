@@ -1,0 +1,52 @@
+package treeSetTaskStudent;
+
+public class Student {
+	public String name;
+	public String college;
+	public String department;
+	public int aggregate;
+	public String location;
+	public Student(){
+		
+	}
+	public Student(String name, String college, String department, int aggregate, String location) {
+		super();
+		this.name = name;
+		this.college = college;
+		this.department = department;
+		this.aggregate = aggregate;
+		this.location = location;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getCollege() {
+		return college;
+	}
+	public void setCollege(String college) {
+		this.college = college;
+	}
+	public String getDepartment() {
+		return department;
+	}
+	public void setDepartment(String department) {
+		this.department = department;
+	}
+	public int getAggregate() {
+		return aggregate;
+	}
+	public void setAggregate(int aggregate) {
+		this.aggregate = aggregate;
+	}
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	
+
+}

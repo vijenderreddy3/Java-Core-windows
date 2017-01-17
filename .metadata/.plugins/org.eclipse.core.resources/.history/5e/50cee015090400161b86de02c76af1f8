@@ -1,0 +1,30 @@
+import java.util.LinkedList;
+
+
+public class Customer extends MyObject{
+
+	private LinkedList<Video> rentedVideos = new LinkedList<Video>();
+	public Customer(String name, int id) {
+		super(name, id);
+	}
+
+	public void rentVideo(Video video){
+		rentedVideos.add(video);
+	}
+	
+	public boolean unRentVideo(Video video){
+		return rentedVideos.remove(video);
+	}
+	
+	public void printAllRentedVideos(){
+		
+		if(rentedVideos.isEmpty()){
+			System.out.println(getName() + " has no Rented Video!");
+		}
+		else{
+			for(int i=0; i<rentedVideos.size(); i++){
+				System.out.println(i + " "+ rentedVideos.get(i).getName() + "\n");
+			}
+		}
+	}
+}

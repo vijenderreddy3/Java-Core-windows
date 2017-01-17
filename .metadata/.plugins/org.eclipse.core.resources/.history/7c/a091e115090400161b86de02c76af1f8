@@ -1,0 +1,152 @@
+
+
+public class DoublyLinkedList<T> implements CustomList<T> {
+	boolean isDebug = true;
+	
+    private int totalElements;        
+    private Node preStart;    		//its next points to the first element in the list.
+    private Node postEnd;   		//its previous pointing to the last element of the list. 
+
+    public DoublyLinkedList() {
+        preStart  = new Node();
+        postEnd = new Node();
+        preStart.next = postEnd;
+        postEnd.prev = preStart;
+    }
+
+    private class Node {
+        private T data;					//can be any object, either Customer or Video
+        private Node next;
+        private Node prev;
+    }
+
+    @Override
+	public void addItem(T item) {
+        Node last = postEnd.prev;
+        Node x = new Node();
+        x.data = item;
+        x.next = postEnd;
+        x.prev = last;
+        postEnd.prev = x;
+        last.next = x;
+        totalElements++;
+    }
+    
+    @Override
+    public boolean removeItem(String name){
+    	    	
+		Node item = getItemNode(name);
+		if(item != null){
+			Node pr = item.prev;
+			pr.next = item.next;
+			item.next.prev = pr;
+			return true;
+		}
+		return false;
+    }
+    
+    @Override
+    public T getItem(String name){
+    	
+    	Node itemNode = getItemNode(name);
+    	if(itemNode != null)
+    		return itemNode.data;
+    	else
+    		return null;
+    }
+    
+    private Node getItemNode(String name){
+		
+		Node item = null;
+		Node current = preStart;
+		
+		while((current = current.next) != postEnd){
+			
+			if(current.data instanceof MyObject){
+				if(((MyObject)current.data).getName().equalsIgnoreCase(name)){
+					item = current;
+					break;
+				}
+			}
+		}
+		return item;
+	}
+
+	@Override
+	public void printCheckInOrOutVideos(boolean isInStore) {
+
+		Node current = preStart;
+		while((current = current.next) != postEnd){
+			
+			if(current.data instanceof Video){
+				if(isInStore){
+					if(!((Video)current.data).isCheckOut())
+						System.out.println("Video: "+((Video)current.data).getName());
+				}
+				else{
+					if(((Video)current.data).isCheckOut())
+						System.out.println("Video: "+((Video)current.data).getName());
+				}
+			}
+		}
+	}
+	
+	@Override
+	public void checkOutVideo(String sVideo, Customer customer) {
+		
+		Video video = (Video)getItem(sVideo);
+		if(video == null)
+			return;
+		if(!video.isCheckOut){
+			video.setCheckOut(true);
+			customer.rentVideo(video);
+		}
+		else{
+			if(isDebug)
+				System.out.println("Video "+ video.getName()+" has already been Checked out");
+		}
+	}
+	@Override
+	public void checkInVideo(String videoName, Customer fromCustomer) {
+		
+		Video video = (Video)getItem(videoName);
+		if(video != null){
+			if(fromCustomer.unRentVideo(video)){
+				video.setCheckOut(false);				
+			}
+		}
+	}
+	
+	@Override
+	public void printAll() {
+		
+		Node current = preStart;
+		while((current = current.next) != postEnd){
+			
+			if(current.data instanceof MyObject){
+				System.out.println(current.data.getClass().getName()+" "+((MyObject)current.data).getName());
+			}
+		}
+	}
+	
+	@Override
+	public boolean isEmpty()    { 
+	   return totalElements == 0; 
+	}
+	  
+	@Override
+	public int getSize(){ 
+	    return totalElements;
+	}
+
+	    
+	@Override
+	public void setDebugOn(boolean isDebug) {
+		this.isDebug = isDebug;
+	}
+
+	@Override
+	public boolean isDebugOn() {
+		return isDebug;
+	}
+}

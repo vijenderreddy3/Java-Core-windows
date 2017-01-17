@@ -1,0 +1,64 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class Lcm {
+	static int[] base = new int[2];
+	
+	static int[] setOfValues ;
+	static List<Integer> gcf = new ArrayList<Integer>();
+	
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter the 2 numbers of an array:");
+		base[0] = sc.nextInt();
+		System.out.println("Enter next number :");
+		base[1] = sc.nextInt();
+		if (base[1] < base[0]) {
+			System.out.println("Second number must be greater than first number");
+			System.exit(0);
+		}
+		setOfValues = new int[base[1] - base[0] + 1];
+		for (int i = 0; i < setOfValues.length; i++) {
+			setOfValues[i] = base[0] + i;
+		}
+		int[] result = setOfValues;
+		int[] tempgcf = new int[result.length];
+		gcf(result,tempgcf);
+		
+	}
+	public static void gcf(int[] result,int[] tempgcf){
+		if (setOfValues[0] != 1) {
+			for (int j = 2; j <= setOfValues[0]; j++) {
+				for (int i = 0; i < result.length; i++) {
+					if ((result[i] % j) == 0) {
+						tempgcf[i] = result[i] / j;
+					} else {
+						for(int k=0;k<tempgcf.length;k++){
+							tempgcf[k]=0;
+						}
+						break;
+					}
+					if(i==result.length){
+						gcf.add(j);
+					}
+				}
+				if(j==setOfValues[0]){
+					int count=0;
+					for(int k:tempgcf){
+						if(k!=0){
+							count++;
+							break;
+						}else{
+						
+						}
+					}
+					if(count>0){
+						result=tempgcf;
+					}
+				}
+			}
+			
+		}
+	}
+}

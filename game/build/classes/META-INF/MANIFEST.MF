@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: . game_lib/syntheticaBlackEye.jar game_lib/synthetica.jar
+Main-Class: Main.Main
+

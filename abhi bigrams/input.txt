@@ -1,0 +1,12 @@
+Each Oracle database has a list of user names To access a database a user must use a database application and attempt a connection with a valid user name of the database
+Each user name has an associated password to prevent unauthorized use
+From the outset Oracle has delivered the industry's most advanced technology to safeguard data at the source the database
+Oracle provides a comprehensive portfolio of security solutions to ensure data privacy protect against insider threats and enable regulatory compliance for both Oracle and non-Oracle databases
+Oracle's powerful preventive and detective security controls include database activity monitoring and blocking privileged user and multifactor access control data classification and discovery transparent data encryption consolidated auditing and reporting secure configuration management and data masking With Oracle customers can deploy reliable data security solutions that require no changes to existing applications saving time and money
+Database security concerns the use of a broad range of information security controls to protect databases potentially including the data the database applications or stored functions the database systems the database servers and the associated network links against compromises of their confidentiality integrity and availability
+It involves various types or categories of controls such as technical procedural administrative and physical
+Database security is a specialist topic within the broader realms of computer security information security and risk management
+Database security refers to the collective measures used to protect and secure a database or database management software from illegitimate use and malicious threats and attacks
+It is a broad term that includes a multitude of processes tools and methodologies that ensure security within a database environment
+Determining the best data security measures for your company can be a daunting task
+At the end of your research you will find that protecting the data requires a data centric audit and protection solution that simplifies and automates the deployment and maintenance processes while providing high-fidelity compliance and security results

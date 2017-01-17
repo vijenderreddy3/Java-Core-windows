@@ -1,0 +1,2 @@
+The process of finding and/or using such a code proceeds by means of Huffman coding, an algorithm developed by David A. Huffman while he was a Ph.D. student at MIT, 
+and published in the 1952 paper "A Method for the Construction of Minimum-Redundancy Codes".

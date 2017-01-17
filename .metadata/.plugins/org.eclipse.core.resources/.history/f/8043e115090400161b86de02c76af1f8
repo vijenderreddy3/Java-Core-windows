@@ -1,0 +1,221 @@
+import java.util.Scanner;
+
+
+public class VideoStore {
+
+	static CustomList<Customer> customers;
+	static CustomList<Video> videos;
+	
+	static Scanner in = new Scanner(System.in);
+
+	public void start(String dataStructure){
+		
+		videos = CommonUtils.initializeVideosList(dataStructure);
+		customers = CommonUtils.initializeCustomersList(dataStructure);
+		CommonUtils.showWellComeScreen();
+		String option = in.next();
+		while(processUserInputs(option))
+			option = in.next();;
+	}
+	
+	public static boolean processUserInputs(String option){
+		
+		switch(option){
+		
+			case "1":{
+				addVideo();
+				break;
+			}
+			case "2":{
+				removeVideo();
+				break;
+			}
+			case "3":{
+				addCustomer();
+				break;
+			}
+			case "4":{
+				removeCustomer();
+				break;
+			}
+			case "5":{
+				getVideo();
+				break;
+			}
+			case "6":{
+				checkOutVideo();
+				break;
+			}
+			case "7":{
+				checkInVideo();
+				break;
+			}
+			case "8":{
+				customers.printAll();
+				break;
+			}
+			case "9":{
+				videos.printAll();
+				break;
+			}
+			case "10":{
+				videos.printCheckInOrOutVideos(true);
+				break;
+			}
+			case "11":{
+				videos.printCheckInOrOutVideos(false);
+				break;
+			}
+			case "12":{
+				printAllVideosRentedByCustomer();
+				break;
+			}
+			case "13":{
+				System.out.println("Goodbye");
+				return false;
+			}
+		}
+		
+		CommonUtils.showWellComeScreen();
+		return true;
+	}
+	
+	static public void removeCustomer(){
+		
+		System.out.println("Enter the name of the Customer to Remove");
+		in.reset();
+		String name = in.next();
+		
+		if(customers.isEmpty()){
+			CommonUtils.listIsEmpty();
+		}
+		else{
+			customers.removeItem(name);
+		}
+	}
+	
+	static public void addCustomer(){
+		
+		System.out.println("Enter the name of the Customer to Add");	
+		String name = in.next();
+		Customer customer = new Customer(name,customers.getSize());
+		
+		customers.addItem(customer);
+	}
+	
+	static public void removeVideo(){
+		
+		System.out.println("Enter the name of the Video to Remove");
+		String name = in.next();
+		
+		if(videos.isEmpty()){
+			CommonUtils.listIsEmpty();
+		}
+		else{
+			videos.removeItem(name);
+		}
+	}
+	
+	static public void addVideo(){
+		
+		System.out.println("Enter the name of the Video to Add");
+		String name = in.next();
+		
+		videos.addItem(new Video(name, videos.getSize()));
+	}
+	
+	public static void getVideo(){
+		
+		System.out.println("Enter the name of the Video");
+		String name = in.next();
+		
+		if(videos.isEmpty()){
+			CommonUtils.listIsEmpty();
+		}
+		
+		Video video = videos.getItem(name);
+		if(video != null){
+			if(!video.isCheckOut())
+				System.out.println("Video '"+name+"' is present in Store");
+			else
+				System.out.println("Video '"+name+"' is Checked Out");
+		}
+		else
+			System.out.println("No such Video Exists in Store");
+		
+	}
+	
+	public static void checkInVideo(){
+		
+		System.out.println("Enter the name of the Video");
+		String videoName = in.next();
+		System.out.println("Enter the name of Customer who Rented");
+		String customerName = in.next();
+		
+		if(customers.isEmpty()){
+			System.out.print("Customer ");
+			CommonUtils.listIsEmpty();
+		}
+		else if(videos.isEmpty()){
+			System.out.print("Video ");
+			CommonUtils.listIsEmpty();
+		}
+		else{
+			Customer customer = customers.getItem(customerName);
+			if(customer == null){
+				System.out.println("No such Customer Exists!");
+			}
+			else{
+				videos.checkInVideo(videoName, customer);
+			}
+		}
+	}
+	
+	public static void checkOutVideo(){
+		
+		System.out.println("Enter the name of the Video");
+		String vName = in.next();
+		System.out.println("Enter the name of the Customer");
+		String cName = in.next();
+
+		if(customers.isEmpty()){
+			System.out.print("Customer ");
+			CommonUtils.listIsEmpty();
+		}
+		else if(videos.isEmpty()){
+			System.out.print("Video ");
+			CommonUtils.listIsEmpty();
+		}
+		else{
+			Customer customer = customers.getItem(cName);
+			if(customer == null){
+				System.out.println("No such Customer Exists!");
+			}
+			else{
+				videos.checkOutVideo(vName, customer);
+			}
+		}
+	}
+	
+	public static void printAllVideosRentedByCustomer(){
+		
+		System.out.println("Enter the name of the Customer");
+		String cName = in.next();
+		
+		if(customers.isEmpty()){
+			System.out.println("Customer ");
+			CommonUtils.listIsEmpty();
+		}
+		else{
+			Customer customer = customers.getItem(cName);
+			if(customer == null){
+				System.out.println("No such Customer Exists!");
+			}
+			else{
+				customer.printAllRentedVideos();
+			}
+		}
+		
+	}
+	
+}

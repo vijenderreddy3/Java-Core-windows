@@ -1,0 +1,21 @@
+package treeSetTaskStudent;
+
+import java.util.TreeSet;
+
+public class TreeSetStudentTask {
+
+	public static void main(String[] args) {
+		Student s1=new Student("babu",100);
+		Student s2=new Student("vijender",75);
+		Student s3=new Student("chandu",80);
+		Student s4=new Student("john",70);
+		Student s5=new Student("paul",65);
+		Student s6=new Student("satwick",90);
+		Student s7=new Student("vijender",72);
+		Student s8=new Student("baby",89);
+		
+		TreeSet tsobj=new TreeSet();
+		
+	}
+
+}

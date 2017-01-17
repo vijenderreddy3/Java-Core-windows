@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login - My Chitt Management.</title>
+<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+	<h1
+		style="padding: 10px; margin-left: 400px; font-size: 50; color: #58D68D">
+		<i><ins>My Chittmanagement</ins></i>
+	</h1>
+		<br>
+		<hr>
+		<br> <br>
+		<form action="/LoginServlet/userHome" method="post">
+		<div id="divLogin" style="">
+			User Name:<input type="text" name="LiUsername" id="LiUsername" placeholder="Username" class="input-login" required></input> 
+			<br> <br> 
+			Password:<input type="password" name="LiPassword" id="LiPassword" placeholder="Password" class="input-login" required></input> 
+			<br> <br> 
+			<a href="Registration.html" style="color: #85C1E9; margin-left: -20px">NewUser Registration</a> 
+			<a href="ForgotPassword.html" style="color: #85C1E9; margin-left: 35px">Forgot Password</a> <br>
+			<br> 
+			<input type="submit" name="loginButton" value="Login" id="bLogin" style="margin-left: 50px;" class="button-style"onclick="buttonLogin()"/>
+			<input type="button" name="clearButton" id="bClear" value="Clear" style="margin-left: 100px;" class="button-style"/>
+		</div>
+		</form>
+	<script src="script.js"></script>
+	
+</body>
+</html>

@@ -1,0 +1,144 @@
+package ashwi;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class Poly {
+	public static void main(String[] args){
+		System.out.println("entered" + new File("").getAbsolutePath());
+		Poly poly = new Poly();
+try{
+	FileReader fr = new FileReader(new File(poly.getClass().getResource("input.txt").getPath()));
+	BufferedReader br = new BufferedReader(fr);
+	String s =null;
+s=br.readLine();
+int fDegree = Integer.parseInt(s);
+s=br.readLine();
+String[] fCoeffs = s.split(" ");
+s=br.readLine();
+int gDegree = Integer.parseInt(s);
+s=br.readLine();
+String[] gCoeffs = s.split(" ");
+
+String addResult="",subtractResult="",multiplyResult="";
+int[] result = add(fDegree, fCoeffs, gDegree, gCoeffs);
+for(int k=0;k<result.length;k++){addResult = addResult + result[k] + " ";}
+		
+System.out.println("");
+result = subtract(fDegree, fCoeffs, gDegree, gCoeffs);
+for(int k=0;k<result.length;k++){subtractResult = subtractResult + result[k] + " ";}
+System.out.println("");
+Object[] res = multiply(fDegree, fCoeffs, gDegree, gCoeffs);
+for(int k=0;k<fDegree+gDegree+1;k++){multiplyResult = multiplyResult + res[k] + " ";}
+
+while(addResult.startsWith("0 "))
+	addResult = addResult.substring(2);
+while(subtractResult.startsWith("0 "))
+	subtractResult = subtractResult.substring(2);
+while(multiplyResult.startsWith("0 "))
+	multiplyResult = multiplyResult.substring(2);
+
+
+FileWriter fw;
+        try {
+            fw = new FileWriter(new File(poly.getClass().getResource("").getPath()+"output.txt"));
+            fw.write(addResult);
+            fw.write(System.lineSeparator()); //new line
+            fw.write(subtractResult);
+            fw.write(System.lineSeparator()); //new line
+            fw.write(multiplyResult);
+            fw.write(System.lineSeparator()); //new line
+            fw.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+}
+
+
+catch(Exception e){
+	e.printStackTrace();
+}
+}
+
+	private static int[] add(int fDegree, String[] fCoeffs, int gDegree,
+			String[] gCoeffs) {
+		int resultDegree= fDegree > gDegree ? fDegree : gDegree;
+		int result[] = new int[resultDegree+1];
+		if(fDegree >= gDegree){
+			for(int i=0;i<=fDegree;i++){
+				String gCoeff = null;
+				if(fDegree-gDegree > i) {gCoeff="0";}
+				else {gCoeff=gCoeffs[i-fDegree+gDegree];}
+		          result[i] = Integer.parseInt(fCoeffs[i]) + Integer.parseInt(gCoeff);
+			}
+		}else{
+
+			for(int i=0;i<=gDegree;i++){
+				String fCoeff = null;
+				if(gDegree-fDegree > i) {fCoeff="0";}
+				else {fCoeff=fCoeffs[i-gDegree+fDegree];}
+		          result[i] = Integer.parseInt(fCoeff) + Integer.parseInt(gCoeffs[i]);
+			}
+		
+		}
+		return result;
+	}
+
+	private static int[] subtract(int fDegree, String[] fCoeffs, int gDegree,
+			String[] gCoeffs) {
+		int resultDegree= fDegree > gDegree ? fDegree : gDegree;
+		int result[] = new int[resultDegree+1];
+		if(fDegree >= gDegree){
+			for(int i=0;i<=fDegree;i++){
+				String gCoeff = null;
+				if(fDegree-gDegree > i) {gCoeff="0";}
+				else {gCoeff=gCoeffs[i-fDegree+gDegree];}
+		          result[i] = Integer.parseInt(fCoeffs[i]) - Integer.parseInt(gCoeff);
+			}
+		}else{
+
+			for(int i=0;i<=gDegree;i++){
+				String fCoeff = null;
+				if(gDegree-fDegree > i) {fCoeff="0";}
+				else {fCoeff=fCoeffs[i-gDegree+fDegree];}
+		          result[i] = Integer.parseInt(fCoeff) - Integer.parseInt(gCoeffs[i]);
+			}
+		
+		}
+		return result;
+	}
+
+	private static Object[] multiply(int fDegree, String[] fCoeffs, int gDegree,
+			String[] gCoeffs) {
+		int resultDegree= fDegree + gDegree;
+		int result[] = new int[resultDegree+1];
+		
+		List<String> list1 = Arrays.asList(fCoeffs);
+
+		List<String> list2 = Arrays.asList(gCoeffs);
+
+		ArrayList<Integer> array =new ArrayList<Integer>(list1.size()+list2.size());
+
+		for (int i = 0 ; i < list1.size() + list2.size() ; i++)
+		    array.add(0);
+
+	    for (int i = 0; i < list1.size(); i++)
+
+	        for (int j = 0; j < list2.size(); j++)
+
+	            array.set(i+j, ((Integer.parseInt(list1.get(i)) * Integer.parseInt(list2.get(j)))+array.get(i+j)));
+
+	    for(int i=0;i<list1.size()+list2.size();i++)
+	    {
+	    //	System.out.println(array.get(i));
+	    }
+	    return array.toArray();
+
+}
+}

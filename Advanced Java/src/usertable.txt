@@ -1,0 +1,1 @@
+create table account(AC_NO number,Ac_name varchar2(30),Ac_amount float,Ac_Creation_date Date Ac_Last_Update timestamp,primary key(Ac_No));

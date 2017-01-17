@@ -1,0 +1,125 @@
+body{
+	background-image: url('PanoramaBackground.png');
+	background-repeat: no-repeat;
+	background-size:100% 100%
+	}
+#divLogin{
+	border:2px solid white;
+	color:#F1948A;
+	margin-top:30px;
+	margin-left:300px;
+	padding-left:15%;
+	padding-top:5%;
+	width:500px;
+	height:300px;
+	border-radius:25%;
+	background-color:transparent;
+	font-size:20;
+	}
+#divRegister{
+	border:2px solid white;
+	color:#F1948A;
+	margin-top:30px;
+	margin-left:200px;
+	padding-left:5%;
+	padding-top:5%;
+	width:75%;
+	height:60%;
+	border-radius:15%;
+	background-color:transparent;
+	font-size:20;	
+	}
+#divForgotpassword{
+	border:2px solid white;
+	color:#F1948A;
+	margin-top:30px;
+	margin-left:200px;
+	padding-left:15%;
+	padding-top:5%;
+	width:60%;
+	height:60%;
+	border-radius:25%;
+	background-color:transparent;
+}
+.div-home{
+	display:inline-block;
+		float:left;
+		height:100%;
+		padding-left:15%;
+		background-color:transparent;
+		color:white;
+		border:2px solid white;
+		margin-top:-10px;
+		
+}
+#homeLabel1{
+	font-size:50px;
+}
+#divHome1{
+		width:200px;
+		margin-right:-2px;
+		margin-left:-6px;
+		border-left:none;
+		border-radius:0px 75px 75px 0px;
+}
+#divHome2{
+		
+		width:740px;
+		border-radius:75px 0px 0px 75px;
+		border-right:none;
+		margin-right:-5px;
+}
+input{
+	background-color:transparent;
+	padding:5px;
+	border-radius:25px;
+	margin-left:10px;
+	line-height:20px;
+	color:#7AFE78;
+}
+.input-login{
+	position:absolute;
+	left:615px;
+}
+.input-left{
+	position:absolute;
+	left:385px;
+	float:left;	
+}
+.input-right{
+	position:absolute;
+	left:800px;
+}
+.label-right{
+	position:absolute;
+	right:550px;
+	text-align:left;
+}
+a.a-as-button{
+	display:block;
+	width:50px;
+	margin-left:30px;
+	margin-top:-8px;
+	color:#F7F9F9;
+	background-color:transparent;
+	padding:8px 16px;
+	border:1px solid white;
+	text-decoration:none;
+}
+a:hover{
+	background-color:#FCF3CF;
+	color:#CB4335;
+}
+.button-style{
+	background-color:#AED6F1;
+	color:#2E4053;
+	padding:10px;
+	width:75px;
+	border-radius:15px;
+}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}

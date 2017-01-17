@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;treeSetTask&apos; to &apos;treeSetTaskEmployee&apos;&#x0D;&#x0A;- Original project: &apos;Core Java&apos;&#x0D;&#x0A;- Original element: &apos;Core Java/src/treeSetTask&apos;&#x0D;&#x0A;- Renamed element: &apos;Core Java/src/treeSetTaskEmployee&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;treeSetTask&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src&lt;treeSetTask" name="treeSetTaskEmployee" qualified="false" references="true" stamp="1473735894309" textual="false" version="1.0"/>
+</session>

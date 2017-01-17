@@ -1,0 +1,20 @@
+
+public class Main {
+
+	static VideoStore videoStore = new VideoStore();
+	static HandlingTransaction handlingTransaction = new HandlingTransaction();
+	
+	public static void main(String[] args){
+		
+		String dataStructure = CommonUtils.getListType(args);
+		if(dataStructure == null){
+			System.out.println("Invalid Inputs");
+		}
+		else if(dataStructure.endsWith("*")){
+			handlingTransaction.start(dataStructure, args);
+		}
+		else{			
+			videoStore.start(dataStructure);
+		}
+	}
+}

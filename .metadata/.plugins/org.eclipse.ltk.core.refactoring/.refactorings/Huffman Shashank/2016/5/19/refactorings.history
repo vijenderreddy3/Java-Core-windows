@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move 4 elements to &apos;Huffman Shashank/src/Huffman&apos;&#x0D;&#x0A;- Original project: &apos;Huffman Shashank&apos;&#x0D;&#x0A;- Destination element: &apos;Huffman Shashank/src/Huffman&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     FileSize.java&#x0D;&#x0A;     Driver.java&#x0D;&#x0A;     FileReader.java&#x0D;&#x0A;     HuffmanCode.java&#x0D;&#x0A;- Update references to refactored element" description="Move compilation units" destination="/src&lt;Huffman" element1="/src&lt;{FileSize.java" element2="/src&lt;{Driver.java" element3="/src&lt;{FileReader.java" element4="/src&lt;{HuffmanCode.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1462933126648" units="4" version="1.0"/>
+</session>

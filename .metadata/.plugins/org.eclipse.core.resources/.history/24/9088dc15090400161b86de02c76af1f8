@@ -1,0 +1,273 @@
+
+public class BinarySearchTree<D> implements CustomList<D>{
+	
+	private boolean isDebug = true;
+	private Node<D> root;
+	private int count = 0;
+	
+	public BinarySearchTree(){
+		this.root = null;
+	}
+
+	class Node<D>{
+		D data;
+		Node<D> left;
+		Node<D> right;	
+		public Node(D data){
+			this.data = data;
+			left = null;
+			right = null;
+		}
+	}
+
+	@Override
+	public void printAll(){
+		display(root);
+	}
+		
+	@Override
+	public void printCheckInOrOutVideos(boolean isInStore){
+		checkedInOrOutStoreVideos(root, isInStore);
+	}
+
+	@Override
+	public D getItem(String name){
+		
+		Node<D> current = root;
+		while(current!=null){
+			
+			if(current.data instanceof MyObject){
+				MyObject v = ((MyObject)current.data);
+				int result = v.getName().compareToIgnoreCase(name);
+				if(result == 0){
+					return current.data;
+				}
+				else if(result > 0){
+					current = current.left;
+				}else{
+					current = current.right;
+				}
+			}
+		}
+		return null;
+	}
+	
+	@Override
+	public void addItem(D d){
+		Node<D> newNode = new Node<D>(d);
+		
+		if(isEmpty()){				//currently list is empty, so new item will be on the top
+			root = newNode;
+			count++;
+			return;
+		}
+		Node<D> current = root;
+		Node<D> parent = null;
+		int result = -1;
+		while(true){
+			parent = current;		
+			
+			if(current.data instanceof MyObject){
+				MyObject v = ((MyObject)current.data);
+				result = v.getName().compareToIgnoreCase(((MyObject)d).getName());
+			}
+			
+			if(result == 0){
+				if(isDebug)
+					System.out.println("Already Exists");
+				return;
+			}
+			else if(result > 0){				
+				current = current.left;
+				if(current==null){
+					parent.left = newNode;
+					count++;
+					return;
+				}
+			}else{
+				current = current.right;
+				if(current==null){
+					parent.right = newNode;
+					count++;
+					return;
+				}
+			}
+		}
+	}
+		
+	@Override
+	public void checkOutVideo(String sVideo, Customer customer){
+		
+		Video video = (Video)getItem(sVideo);
+		
+		if(video == null)
+			return;
+		if(!video.isCheckOut){
+			video.setCheckOut(true);
+			customer.rentVideo(video);
+		}
+		else{
+			if(isDebug)
+				System.out.println("Video "+ video.getName()+" has already been Checked out.");
+		}
+	}
+	
+	@Override
+	public void checkInVideo(String videoName, Customer fromCustomer){
+		
+		Video video = (Video)getItem(videoName);
+		if(video != null){
+			if(fromCustomer.unRentVideo(video)){
+				video.setCheckOut(false);				
+			}
+		}
+	}
+
+	@Override
+	public boolean removeItem(String name){
+		Node<D> parent = root;
+		Node<D> current = root;
+		boolean isLeftChild = false;
+		
+		if(isEmpty()){
+			return false;
+		}
+		while(true){
+			
+			int result = -1;
+			if(current.data instanceof MyObject){
+				MyObject v = ((MyObject)current.data);
+				result = v.getName().compareToIgnoreCase(name);
+			}
+		
+			if(result == 0){
+				count--;				//Item found, going to delete it.
+				break;
+			}
+			else if(result > 0){
+				isLeftChild = true;
+				parent = current;
+				current = current.left;
+			}else{
+				isLeftChild = false;
+				parent = current;
+				current = current.right;
+			}
+
+			if(current ==null){
+				return false;
+			}
+		}
+
+		if(current.left==null && current.right==null){
+			if(current==root){
+				root = null;
+			}
+			if(isLeftChild ==true){
+				parent.left = null;
+			}else{
+				parent.right = null;
+			}
+		}
+
+		else if(current.right==null){
+			if(current==root){
+				root = current.left;
+			}else if(isLeftChild){
+				parent.left = current.left;
+			}else{
+				parent.right = current.left;
+			}
+		}
+		
+		else if(current.left==null){
+			if(current==root){
+				root = current.right;
+			}else if(isLeftChild){
+				parent.left = current.right;
+			}else{
+				parent.right = current.right;
+			}
+		}else if(current.left!=null && current.right!=null){
+			
+			Node<D> successor	 = getSuccessorNode(current);
+			if(current==root){
+				root = successor;
+			}else if(isLeftChild){
+				parent.left = successor;
+			}else{
+				parent.right = successor;
+			}			
+			successor.left = current.left;
+		}		
+		return true;		
+	}
+	
+//-------------------------  Un-Overrided Method, private one  ----------------------------------
+
+	private void checkedInOrOutStoreVideos(Node<D> node, boolean isInStore){
+		
+		if(node!=null){
+			checkedInOrOutStoreVideos(node.left,isInStore);
+			
+			if(node.data instanceof Video ){
+				if(isInStore){
+					if(!((Video)node.data).isCheckOut())
+						System.out.println("Video: "+((Video)node.data).getName());
+				}
+				else{
+					if(((Video)node.data).isCheckOut())
+						System.out.println("Video: "+((Video)node.data).getName());
+				}
+			}
+			checkedInOrOutStoreVideos(node.right,isInStore);
+		}
+	}
+
+	private Node<D> getSuccessorNode(Node<D> nodeToBeDeleted){
+		Node<D> successsorNode =null;
+		Node<D> successsorParent =null;
+		Node<D> current = nodeToBeDeleted.right;
+		while(current!=null){
+			successsorParent = successsorNode;
+			successsorNode = current;
+			current = current.left;
+		}
+	
+		if(successsorNode!=nodeToBeDeleted.right){
+			successsorParent.left = successsorNode.right;
+			successsorNode.right = nodeToBeDeleted.right;
+		}
+		return successsorNode;
+	}
+	
+	public void display(Node<D> root){
+		if(root!=null){
+			display(root.left);
+			if(root.data instanceof MyObject){
+				System.out.println(root.data.getClass().getName()+" "+((MyObject)root.data).getName());
+			}
+			display(root.right);
+		}
+	}
+		
+	@Override
+	public void setDebugOn(boolean isDebug) {
+		this.isDebug = isDebug;
+	}
+	
+	@Override
+	public boolean isDebugOn() {
+		return isDebug;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return count == 0;
+	}
+
+	@Override
+	public int getSize() {
+		return count;
+	}
+}

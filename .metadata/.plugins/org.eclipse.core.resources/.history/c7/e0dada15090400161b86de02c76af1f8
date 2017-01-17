@@ -1,0 +1,88 @@
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Random;
+import java.util.Scanner;
+
+
+public class HandlingTransaction {
+
+	static CustomList<Customer> customers;
+	static CustomList<Video> videos;
+	static Scanner in = new Scanner(System.in);
+	
+	public void start(String dataStructure, String args[]){
+		
+		String structureType = dataStructure.substring(0,dataStructure.length()-1);		//-1 is to remove '*'
+		videos = CommonUtils.initializeVideosList(structureType);
+		customers = CommonUtils.initializeCustomersList(structureType);
+		int values[] = new int[]{Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3])};
+		handleTransaction(values);
+	}
+	
+	static public void handleTransaction(int[] values){
+		
+		Random r = new Random();
+		String sVideo, sCustomer;
+		String videoArray[] = new String[values[0]];
+		String customerArray[] = new String[values[1]];
+		Queue<Integer> transactionQueue = new LinkedList<>();
+
+		for(int i=0; i<values[0]; i++){
+			sVideo = CommonUtils.generateString(r, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", 8);
+			videos.addItem(new Video(sVideo, videos.getSize()));
+			videoArray[i] = sVideo;
+		}
+		
+		for(int i=0; i<values[1]; i++){
+			sCustomer = CommonUtils.generateString(r, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", 7);
+			customers.addItem(new Customer(sCustomer, customers.getSize()));
+			customerArray[i] = sCustomer;
+		}
+		
+		for(int i=0; i<values[2]; i++){
+			int option = r.nextInt() % 3 + 5;
+			transactionQueue.add(option);
+		}
+		
+		videos.setDebugOn(false);
+		customers.setDebugOn(false);
+		
+		Date startTime, endTime;
+		System.out.println("\nGoing to Start Transactions....");
+		startTime = new Date();
+		while(!transactionQueue.isEmpty()){	
+			switch (transactionQueue.remove()) {
+				
+				case 5:{
+					videos.getItem(videoArray[Math.abs(r.nextInt() % values[0])]);
+					break;
+				}
+				case 6:{
+					String customerName = customerArray[Math.abs(r.nextInt() % values[1])];
+					Customer customer = customers.getItem(customerName);
+					if(customer != null){
+						videos.checkOutVideo(videoArray[Math.abs(r.nextInt() % values[0])], customer);
+						break;
+					}
+				}
+				case 7:{
+					String customerName = customerArray[Math.abs(r.nextInt() % values[1])];
+					Customer customer = customers.getItem(customerName);
+					if(customer != null){
+						videos.checkInVideo(videoArray[Math.abs(r.nextInt() % values[2])], customer);
+						break;
+					}
+				}
+			}
+		}
+		System.out.println("\n All Transactions have Ended!\n");
+		endTime = new Date();
+		long timeTaken = endTime.getTime() - startTime.getTime();
+		long mSec = timeTaken % 1000;
+		long sec = (timeTaken/1000 % 60);
+		long min = timeTaken / (60 * 1000) % 60;
+		long hr = timeTaken / (60 * 60 * 1000);
+		System.out.println("Total Time of All Transactions(HH:MN:SC:MS) using '"+videos.getClass()+"': "+hr+":"+min+":"+sec+":"+mSec);
+	}
+}

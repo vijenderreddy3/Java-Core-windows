@@ -1,0 +1,338 @@
+public class AVLtree<T> implements CustomList<T>{
+ 
+	private boolean isDebug = true;
+	private int count = 0;
+    private Node<T> root;
+ 
+    private class Node<T> {
+        private T data;
+        private int balance;
+        private Node<T> left, right, parent;
+ 
+        Node(T data, Node<T> p) {
+            this.data = data;
+            parent = p;
+        }
+    }
+    
+    @Override
+    public void addItem(T item) {
+        
+    	if (isEmpty()){
+            root = new Node<T>(item, null);
+            count++;
+    	}
+        else {
+            Node<T> currentNode = root;
+            Node<T> parent;
+            int result = -1;
+            while (true) {
+
+    			if(currentNode.data instanceof MyObject){
+    				MyObject v = ((MyObject)currentNode.data);
+    				result = v.getName().compareToIgnoreCase(((MyObject)item).getName());
+    			}
+    			if(result == 0){
+    				if(isDebug)
+    					System.out.println("Already Exists");
+    				return;
+    			} 			
+                parent = currentNode;
+                boolean isRightDirection = result < 0;
+                if(isRightDirection){
+                	currentNode = currentNode.right;
+                }
+                else{
+                	currentNode = currentNode.left;
+                }
+ 
+                if (currentNode == null) {
+                	count++;				//Adding new Node
+                    if (isRightDirection) {
+                        parent.right = new Node<T>(item, parent);
+                    } else {
+                        parent.left = new Node<T>(item, parent);
+                    }
+                    reBalanceTree(parent);
+                    break;
+                }
+            }
+        }
+    }
+ 
+	@Override
+	public T getItem(String name){
+		
+		Node<T> current = root;
+		while(current!=null){
+			
+			if(current.data instanceof MyObject){
+				MyObject v = ((MyObject)current.data);
+				int result = v.getName().compareToIgnoreCase(name);
+				if(result == 0){
+					return current.data;
+				}
+				else if(result > 0){
+					current = current.left;
+				}else{
+					current = current.right;
+				}
+			}
+		}
+		return null;
+	}
+  
+    @Override
+	public void printCheckInOrOutVideos(boolean isInStore) {
+		checkedInOrOutStoreVideos(root, isInStore);
+	}
+
+	@Override
+	public void checkOutVideo(String videoName, Customer customer){
+		
+		Video video = (Video)getItem(videoName);
+		
+		if(video == null)
+			return;
+		if(!video.isCheckOut){
+			video.setCheckOut(true);
+			customer.rentVideo(video);
+		}
+		else{
+			if(isDebug)
+				System.out.println("Video "+ video.getName()+" has already been Checked out.");
+		}
+	}
+
+	@Override
+	public void checkInVideo(String videoName, Customer fromCustomer){
+		
+		Video video = (Video)getItem(videoName);
+		if(video != null){
+			if(fromCustomer.unRentVideo(video)){
+				video.setCheckOut(false);				
+			}
+		}
+	}
+
+	   @Override
+	    public boolean removeItem(String name) {
+	       
+	    	if(isEmpty()){
+	            return false;
+	    	}
+	        Node<T> current = root;
+	        Node<T> parent = root;
+	        Node<T> nodeToBeDelted = null;
+	        Node<T> childNode = root;
+	        int result = -1;
+	 
+	        while (childNode != null) {
+	            
+	        	parent = current;
+	            current = childNode;
+	            
+				if(current.data instanceof MyObject){
+					MyObject ob = ((MyObject)current.data);
+					result = ob.getName().compareToIgnoreCase(name);
+				}
+
+				boolean isRightDirection = result < 0;
+				if(isRightDirection){
+	                childNode = childNode.right;
+	            }
+	            else{
+	                childNode = childNode.left;
+	            }
+	            if (result == 0)
+	                nodeToBeDelted = current;
+	        }
+	 
+	        if (nodeToBeDelted != null) {
+	            nodeToBeDelted.data = current.data;
+	 
+	            childNode = current.left != null ? current.left : current.right;
+	 
+	            int result1 = -1;
+				if(root.data instanceof MyObject){
+					MyObject v = ((MyObject)root.data);
+					result = v.getName().compareToIgnoreCase(name);
+				}
+				
+	            if (result1 == 0) {
+	                root = childNode;
+	            } 
+	            else {
+	                if (parent.left == current) {
+	                    parent.left = childNode;
+	                } else {
+	                    parent.right = childNode;
+	                }
+	                reBalanceTree(parent);
+	            }  
+	            count--;			//node deleted;
+	            return true;
+	        }
+	        else
+	        	return false;
+	    }
+
+	@Override
+	public void printAll() {
+		dispaly(root);
+	}
+	
+	//------------------------------  Private Methods  ------------------------------------
+	   
+
+	   private void dispaly(Node<T> currentNode){
+		  
+		  if(currentNode != null){
+			  
+			  dispaly(currentNode.left);
+			  if(root.data instanceof MyObject){
+					System.out.println(root.data.getClass().getName()+" "+((MyObject)root.data).getName());
+			  }
+			  dispaly(currentNode.right);
+		  }
+	  }
+	   
+	   private void checkedInOrOutStoreVideos(Node<T> node, boolean isInStore){
+			
+			if(node!=null){
+				checkedInOrOutStoreVideos(node.left,isInStore);
+				
+				if(node.data instanceof Video ){
+					if(isInStore){
+						if(!((Video)node.data).isCheckOut())
+							System.out.println("Video: "+((Video)node.data).getName());
+					}
+					else{
+						if(((Video)node.data).isCheckOut())
+							System.out.println("Video: "+((Video)node.data).getName());
+					}
+				}
+				checkedInOrOutStoreVideos(node.right,isInStore);
+			}
+	   }
+	 	 
+	   // Rotating Left, 
+	    private Node<T> rotateLeft(Node<T> node) {
+	 
+	        Node<T> rightChild = node.right;
+	        rightChild.parent = node.parent;
+	 
+	        node.right = rightChild.left;
+	 
+	        if (node.right != null)
+	            node.right.parent = node;
+	 
+	        rightChild.left = node;
+	        node.parent = rightChild;
+	 
+	        if (rightChild.parent != null) {
+	            if (rightChild.parent.right == node) {
+	                rightChild.parent.right = rightChild;
+	            } else {
+	                rightChild.parent.left = rightChild;
+	            }
+	        }
+	 
+	        setBalance(node, rightChild);
+	 
+	        return rightChild;
+	    }
+	 
+	    //Rotating right against the given node
+	    private Node<T> rotateRight(Node<T> node) {
+	 
+	        Node<T> leftChild = node.left;
+	        leftChild.parent = node.parent;
+	 
+	        node.left = leftChild.right;
+	 
+	        if (node.left != null)
+	            node.left.parent = node;
+	 
+	        leftChild.right = node;
+	        node.parent = leftChild;
+	 
+	        if (leftChild.parent != null) {
+	            if (leftChild.parent.right == node) {
+	                leftChild.parent.right = leftChild;
+	            } else {
+	                leftChild.parent.left = leftChild;
+	            }
+	        }
+	 
+	        setBalance(node, leftChild);
+	 
+	        return leftChild;
+	    }
+	 
+	    
+	    private Node<T> rotateLeftThenRight(Node<T> node) {
+	        node.left = rotateLeft(node.left);
+	        return rotateRight(node);
+	    }
+	 
+	    private Node<T> rotateRightThenLeft(Node<T> node) {
+	        node.right = rotateRight(node.right);
+	        return rotateLeft(node);
+	    }
+	 
+	    private int heightOf(Node<T> node) {
+	        if (node == null)
+	            return -1;
+	        return 1 + Math.max(heightOf(node.left), heightOf(node.right));
+	    }
+	 
+	    private void setBalance(Node<T>... nodes) {
+	        for (Node<T> n : nodes)
+	            n.balance = heightOf(n.right) - heightOf(n.left);
+	    }
+	    
+		private void reBalanceTree(Node<T> node) {
+		      setBalance(node);
+		 
+		       if (node.balance == -2) {
+		           if (heightOf(node.left.left) >= heightOf(node.left.right))
+		               node = rotateRight(node);
+		           else
+		               node = rotateLeftThenRight(node);
+		 
+		        } else if (node.balance == 2) {
+		            if (heightOf(node.right.right) >= heightOf(node.right.left))
+		                node = rotateLeft(node);
+		            else
+		                node = rotateRightThenLeft(node);
+		        }
+		 
+		        if (node.parent != null) {
+		            reBalanceTree(node.parent);
+		        } else {
+		            root = node;
+		        }
+		    }
+
+	    
+	    @Override
+	    public boolean isDebugOn() {
+			return isDebug;
+		}
+		
+		@Override
+		public void setDebugOn(boolean isPrintEnable) {
+			this.isDebug = isPrintEnable;
+		}
+
+		@Override
+		public boolean isEmpty() {
+			return count == 0;
+		}
+
+		@Override
+		public int getSize() {
+			return count;
+		}
+}

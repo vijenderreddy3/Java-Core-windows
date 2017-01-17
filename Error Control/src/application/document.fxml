@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="165.0" prefWidth="362.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.DocumentClass">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="Send To" />
+      <TextField fx:id="sendTo" layoutX="66.0" layoutY="10.0" />
+      <Label layoutX="36.0" layoutY="44.0" text="Port" />
+      <TextField fx:id="port" layoutX="66.0" layoutY="40.0" />
+      <Button defaultButton="true" layoutX="17.0" layoutY="118.0" mnemonicParsing="false" onAction="#send" prefHeight="33.0" prefWidth="94.0" text="SEND" />
+      <Button layoutX="119.0" layoutY="118.0" mnemonicParsing="false" onAction="#receive" prefHeight="33.0" prefWidth="94.0" text="RECEIVE" />
+      <Label layoutX="14.0" layoutY="75.0" text="Packet Lost Simulation" />
+      <TextField fx:id="packetLoss" layoutX="139.0" layoutY="71.0" prefHeight="25.0" prefWidth="76.0" />
+      <Label layoutX="224.0" layoutY="14.0" text="Total Packet : " />
+      <Label layoutX="265.0" layoutY="36.0" text="Sent : " />
+      <Label layoutX="265.0" layoutY="57.0" text="Loss : " />
+      <Label fx:id="totalPacket" layoutX="298.0" layoutY="14.0" prefHeight="17.0" prefWidth="61.0" />
+      <Label fx:id="sent" layoutX="298.0" layoutY="36.0" prefHeight="17.0" prefWidth="61.0" />
+      <Label fx:id="loss" layoutX="298.0" layoutY="57.0" prefHeight="17.0" prefWidth="61.0" />
+      <RadioButton fx:id="SAW" layoutX="21.0" layoutY="96.0" mnemonicParsing="false" selected="true" text="SAW">
+         <toggleGroup>
+            <ToggleGroup fx:id="grp" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="GBN" layoutX="74.0" layoutY="96.0" mnemonicParsing="false" text="GBN" toggleGroup="$grp" />
+   </children>
+</AnchorPane>

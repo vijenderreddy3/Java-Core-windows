@@ -1,0 +1,10 @@
+To Run Coder
+
+1.	Java Files
+	a.	Open CMD
+	b.	javac Executor.java
+	c.	java Executor "fileName.txt"
+
+2.	Jar File
+	a.	Open CMD
+	b.	java -jar HuffmanEncoder.jar "fileName.txt"

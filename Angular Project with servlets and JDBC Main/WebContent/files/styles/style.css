@@ -1,0 +1,23 @@
+@CHARSET "ISO-8859-1";
+/*body image */
+body{
+	background-image: url('E:/Eclips/Angular Project with servlets and JDBC Main/WebContent/files/images/PanoramaBackground.png');
+	background-repeat: no-repeat;
+	background-size:100% 100%
+}
+#bodyDiv{
+	height:100%;
+	width:100%;
+}
+#header{
+	height:100px;
+	width:100%;
+}
+#body{
+	height:500px;
+	width:100%;
+}
+#footer{
+	height:50px;
+	width:100%;
+}

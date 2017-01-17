@@ -1,0 +1,169 @@
+public class SingleLinkedList<T> implements CustomList<T>{
+
+	private boolean isDebug = true;
+	private Node<T> root = null;
+	private int count = 0;
+	
+	class Node<T>{
+		
+		T data;
+		Node<T> next = null;
+		
+		public Node(T data){
+			this.data = data;
+		}
+	}
+	
+	@Override
+	public void printAll(){
+		
+		Node<T> current = root;
+		if(current == null)
+			System.out.println("List is empty");
+		else{
+			while(current != null){	
+				if(current.data instanceof MyObject){
+					System.out.println(current.data.getClass().getName()+" "+((MyObject)current.data).getName());
+				}
+				current = current.next;
+			}
+		}
+	}
+	
+	@Override
+	public boolean removeItem(String name){
+		boolean isRemoved = false;
+		Node<T> current = root;
+		Node<T> nodeToBeDeleted = null;
+		Node<T> preCurrent = new Node<T>(null);
+		preCurrent.next = current;
+		
+		if(current == null){
+			System.out.println("List is empty!");
+			return isRemoved;
+		}
+		while(current != null){
+			
+			if(current.data instanceof MyObject){
+				if(((MyObject)current.data).getName().equalsIgnoreCase(name)){
+					nodeToBeDeleted = current;
+					break;
+				}
+			}
+			current = current.next;
+			preCurrent = preCurrent.next;
+		}
+		if(nodeToBeDeleted != null){
+			preCurrent.next = current.next;
+			isRemoved = true;
+			count--;
+			if(nodeToBeDeleted == root){
+				 root = root.next;
+			}
+		}
+		return isRemoved;
+	}
+	
+	@Override
+	public void addItem(T item){
+
+		Node<T> current = root;
+		Node<T> newNode = new Node<T>(item);
+		
+		if(root == null){
+			root = newNode;
+		}
+		else{
+			for(;current.next != null; current = current.next);
+			current.next = newNode;
+		}
+		count++;
+	}
+	
+	@Override
+	public void checkOutVideo(String sVideo, Customer toCustomer){
+		
+		Video video = (Video)getItem(sVideo);
+		if(video == null)
+			return;
+		if(!video.isCheckOut){
+			video.setCheckOut(true);
+			toCustomer.rentVideo(video);
+		}
+		else{
+			if(isDebug)
+				System.out.println("Video "+ video.getName()+" has already been Checked out.");
+		}
+	}
+	
+	@Override
+	public void checkInVideo(String videoName, Customer fromCustomer){
+		
+		Video video = (Video)getItem(videoName);
+		if(video != null){
+			if(fromCustomer.unRentVideo(video)){
+				video.setCheckOut(false);				
+			}
+		}
+	}
+	
+	@Override
+	public void printCheckInOrOutVideos(boolean isInStore){
+		
+		Node<T> current = root;
+		if(root == null)
+			System.out.println("List is empty");
+		else{
+			while(current != null){
+				if(isInStore){
+					if(!((Video)current.data).isCheckOut())
+						System.out.println("Video: "+((Video)current.data).getName());
+				}
+				else{
+					if(((Video)current.data).isCheckOut())
+						System.out.println("Video: "+((Video)current.data).getName());
+				}
+				current = current.next;
+			}
+		}
+	}
+
+	@Override
+	public T getItem(String name){
+		
+		T item = null;
+		Node<T> current = root;
+		
+		while(current != null){
+			if(current.data instanceof MyObject){
+				if(((MyObject)current.data).getName().equalsIgnoreCase(name)){
+					item = current.data;
+					break;
+				}
+			}
+			current = current.next;
+		}
+		
+		return item;
+	}
+	
+	@Override
+	public int getSize(){
+		return count;
+	}
+	
+	@Override
+	public boolean isEmpty(){
+		return count == 0;
+	}
+	
+	@Override
+	public boolean isDebugOn() {
+		return isDebug;
+	}
+	
+	@Override
+	public void setDebugOn(boolean isDebug) {
+		this.isDebug = isDebug;
+	}
+}

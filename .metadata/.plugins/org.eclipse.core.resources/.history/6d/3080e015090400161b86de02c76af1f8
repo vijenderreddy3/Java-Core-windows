@@ -1,0 +1,15 @@
+
+public interface CustomList<T> {
+
+	public boolean isEmpty();
+	public int getSize();
+	public void printCheckInOrOutVideos(boolean isInStore);
+	public void printAll();
+	public void setDebugOn(boolean isDebug);
+	public void checkInVideo(String videoName, Customer fromCustomer);
+	public boolean removeItem(String name);
+	public boolean isDebugOn();
+	public void checkOutVideo(String sVideo, Customer customer);
+	public T getItem(String name);
+	public void addItem(T item);
+}

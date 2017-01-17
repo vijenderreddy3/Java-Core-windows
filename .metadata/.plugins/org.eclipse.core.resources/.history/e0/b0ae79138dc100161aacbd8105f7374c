@@ -1,0 +1,14 @@
+import java.util.Scanner;
+
+public class Lcm {
+
+	public static void main(String[] args) {
+		int[] base=new int[2];
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter the 2 numbers of an array:");
+		base[0]=sc.nextInt();
+		System.out.println("Enter next number :");
+		base[1]=sc.nextInt();
+	}
+
+}
